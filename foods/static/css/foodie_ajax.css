@@ -1,0 +1,23 @@
+ul#feed {
+	margin: 0;
+}
+
+ul#feed li {
+	padding: 1em 1em;
+}
+
+ul#feed .feed-post {
+	position: relative;
+	width: 90%;
+	display: inline-block;
+	margin-left: 2%;
+}
+
+ul#feed .feed-post h5 {
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+ul#feed .feed-post h5 > small {
+	font-size: 1.2rem;
+}

@@ -1,0 +1,91 @@
+{% extends "foods/base.html" %}
+{% load thumbnail %}
+{% load static %}
+
+{% block content %}
+<h2 align="center">{{ user.username }}</h2>
+<div class="profile-photo" align="center">
+	{% if user.profile.photo %}
+	{% thumbnail user.profile.photo "350x350" crop="center" as im %}
+		<img class="img-responsive  img-thumbnail rounded-circle" src="{{ im.url }}" alt="{{user.get_full_name }}" style="width: 65%;">
+	{% endthumbnail %}
+	{% else %}
+	<img  class="rounded-circle img-responsive img-thumbnail" src="{% static 'img/portrait_placeholder.png' %}" style="width: 60%">
+	{% endif %}
+</div>
+
+<div align="center">
+<div class="m-4" align="center" style="border-radius:25px; border: 2px solid #ff5500;width: 12em;padding: .5em 1em;">
+  {% with total_followers=user.followers.count %}
+    <span class="count">
+      <span class="total"">{{ total_followers }}</span>
+      follower{{ total_followers|pluralize }}
+    </span>
+    <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow" class="follow button">
+      {% if request.user not in user.followers.all %}
+        Follow
+      {% else %}
+        Unfollow
+      {% endif %}
+    </a>
+  {% endwith %}
+</div>
+</div>
+ 
+    <div id="foods-foodie">
+      {% include "account/user/user_detail_ajax.html"%}
+    </div>
+    
+{% endblock %}
+
+{% block domready %}
+
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+
+  $(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+     block_request = true;
+      page += 1;
+      $.get('?page=' + page, function(data) {
+       if(data == '') {
+          empty_page = true;
+        }
+        else {
+          block_request = false;
+          $('#foods-foodie').append(data);
+        }
+      });
+    }
+  });
+
+  $('a.follow').click(function(e){
+    e.preventDefault();
+    $.post('{% url "user_follow" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok') {
+          var previous_action = $('a.follow').data('action');
+
+          // toggle data-action
+          $('a.follow').data('action',
+            previous_action == 'follow' ? 'unfollow' : 'follow');
+          // toggle link text
+          $('a.follow').text(
+            previous_action == 'follow' ? 'Unfollow' : 'Follow');
+
+          // update total followers
+          var previous_followers = parseInt(
+            $('span.count .total').text());
+          $('span.count .total').text(previous_action == 'follow' ? previous_followers + 1 : previous_followers - 1);
+        }
+      }
+    );
+  });
+{% endblock %}
+

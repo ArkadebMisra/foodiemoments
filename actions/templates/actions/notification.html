@@ -1,0 +1,60 @@
+{% extends "foods/base.html" %}
+{% load thumbnail %}
+{% load static %}
+{% block content %}
+<h1 align="center" style="font-family: Comic Sans Ms;sans-serif; padding: .6em .6em;">Notifications</h1>
+{% for action in actions %}
+{% with user=action.user profile=action.user.profile %}
+	{% if profile.photo %}
+		<div class="action mt-2 mb-2" style=" border-radius:50px; border: 1.5px solid #ff66ff;padding: 2px;">
+					<div style=" margin: 2px;display: inline-block">
+					{% thumbnail user.profile.photo "350x350" crop="100%" as im %}
+					<a href="{{ user.get_absolute_url }}">
+						<img src="{{ im.url }}" class="rounded-circle img-responsive" style="width: 20%;padding: .5em .5em;">
+					</a>
+					{% endthumbnail %}
+					
+					<div style=" margin: 2px;display: inline-block;">
+					<span class="date"><small>{{ action.created|timesince }} ago</small></apan>
+					<br />
+					<a href="{{ user.get_absolute_url }}">
+						{{ user.username }}
+					</a>
+					{{ action.verb }}
+					{% if action.target %}
+					{% with target=action.target %}
+					<a href="{{ target.get_absolute_url }}">your image</a>
+					{% endwith %}
+					{% endif %}
+					</div>
+					</div>
+
+		</div>
+	{% else %}
+		<div class="action mt-2 mb-2" style=" border-radius:50px; border: 1.5px solid #ff66ff;padding: 2px;">
+					<div style=" margin: 2px;display: inline-block">
+					<a href="{{ user.get_absolute_url }}">
+						<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 20%;padding: .5em .5em;">
+					</a>
+					
+					<div style=" margin: 2px;display: inline-block;">
+					<span class="date"><small>{{ action.created|timesince }} ago</small></apan>
+					<br />
+					<a href="{{ user.get_absolute_url }}">
+						{{ user.username }}
+					</a>
+					{{ action.verb }}
+					{% if action.target %}
+					{% with target=action.target %}
+					<a href="{{ target.get_absolute_url }}">your image</a>
+					{% endwith %}
+					{% endif %}
+					</div>
+					</div>
+
+		</div>
+	{% endif %}
+{% endwith %}
+{% endfor %}
+{% endblock %}
+

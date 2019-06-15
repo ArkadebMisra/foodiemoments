@@ -1,0 +1,35 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+<h1 align="center" style="font-family: Comic Sans Ms;sans-serif; padding: .6em .6em;">People</h1>
+
+<div id="foods-foodie">
+	{% include "account/user/user_list_ajax.html" %}
+</div>
+{% endblock %}
+
+{% block domready %}
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+
+  $(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+     block_request = true;
+      page += 1;
+      $.get('?page=' + page, function(data) {
+       if(data == '') {
+          empty_page = true;
+        }
+        else {
+          block_request = false;
+          $('#foods-foodie').append(data);
+        }
+      });
+    }
+  });
+{% endblock %}

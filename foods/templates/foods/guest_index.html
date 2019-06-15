@@ -1,0 +1,46 @@
+{% load bootstrap4 %}
+{% load thumbnail %}
+{% load static %}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+		<title>index</title>
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		
+		<!--[if it IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	
+	<div class="container-fluid d-none d-md-block" style="background-image: url({% static 'img/foodiemoments_bg.jpg'%});width:100%;height: 100%; background-size: cover;">
+	<div class="containerlogo" align="left" style="padding: 2em 2em;">
+		<img class="img-responsive" src="{% static 'img/foodiemoments.png' %}" style="height:20em; width:20em;">
+	</div>
+	<h2  align="left" style="color: #ff0066;font-family: Comic Sans Ms;sans-serif;padding: 0em 1.5em;">
+		welcome to FoodieMoments!
+	</h2>
+	<h4 align="left" style="color: #000000; font-weight: bold;font-family: Comic Sans Ms;padding: 0em 2em;">
+		<p>
+			<p>Share your foodie moments</p>
+			<p>enjoy the amazing world of flavours....</p>
+			<p><a href="{% url 'register' %}">create</a> a account or <a href="{% url 'login' %}">Log-in</a> to share your moments...</p>
+		</p>
+	</h4>
+	</div>
+	
+	<div class="container-fluid d-md-none" style="background-image: url({% static 'img/bg_small.jpg'%});width:100%;height: 100%; background-size: cover;">
+	<div class="containerlogo" align="center">
+		<img class="img-responsive" src="{% static 'img/mobile_logo.png' %}" style="height:17em; width:17em;">
+	</div>
+
+	<h4 align="center" style="color: #000000; font-weight: bold;font-family: Comic Sans Ms;">
+		<p>
+			<p>Share your foodie moments</p>
+			<p><a href="{% url 'register' %}">create</a> an account or <a href="{% url 'login' %}">Log-in</a> to share your moments...</p>
+		</p>
+	</h4>
+	</div>

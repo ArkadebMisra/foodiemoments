@@ -1,0 +1,226 @@
+
+{% load bootstrap4 %}
+{% load thumbnail %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+		<link href="{% static 'css/base.css' %}" type="text/css" rel="stylesheet"/>
+		<title>FoodieMoments</title>
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		
+		<!--[if it IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+
+		<nav class="navbar navbar-expand-md nav-light  sticky-top" style="background-color: #ffe6f3;border-left: 5px solid #ff339c; border-right: 5px solid #ff339c;">
+			<div class="container">
+				
+					<a class="nav-link d-md-none d-lg-none d-xl-none" href="{% url 'foodie' %}" style="display:inline;"><i class="fas fa-utensils" style="color:#000000"></i></a>
+					<a class="nav-link d-md-none d-lg-none d-xl-none" href="{% url 'user_list' %}" style="display:inline;"><i class="fas fa-user" style="color:#000000"></i></a>
+					<a class="nav-link d-md-none d-lg-none d-xl-none" href="{% url 'notification' %}" style="display:inline;"><i class="fas fa-carrot" style="color:#000000"></i></a>
+					<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#nav-menu" sria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="fas fa-hamburger"></span>
+					</button>
+					<!-- <a class="btn btn-primary navbar-btn pull-left" href="#" role="button">sign up</a> -->
+				
+				<div class="collapse navbar-collapse" id="nav-menu">
+					<ul class="nav navbar-nav">
+						<a class="nav-brand d-none d-md-block">
+							<img class="img-fluid" src="{% static 'img/nav_logo.png' %}"  style="height:3.5rem; width:3.5em;">
+						</a>
+						
+						<li class="nav-item d-md-none d-lg-none d-xl-none">
+						 Hello,{{ request.user.username.title }}!
+						</li>
+						<li class="nav-item">
+						<a class="nav-link d-none d-md-block" href="{% url 'foodie' %}"><i class="fas fa-utensils" style="color:#000000"></i> foodie</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link d-none d-md-block" href="{% url 'user_list' %}"><i class="fas fa-user" style="color:#000000"></i> People</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link d-none d-md-block" href="{% url 'notification' %}"><i class="fas fa-carrot" style="color:#000000;"></i> notification</a>
+						</li>
+						{% if user.is_authenticated %}
+						<li class="nav-item">
+						<a class=" nav-link d-md-none d-lg-none d-xl-none" href="{% url 'your_profile' %}"><i class="far fa-user-circle"></i> Profile</a>
+						</li>
+						<li class="nav-item">
+							<a class=" nav-link d-md-none d-lg-none d-xl-none" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> log out</a>
+						</li>
+						{% else %}
+						<li class="nav-item">
+							<a class="d-md-none d-lg-none d-xl-none" href="{% url 'login' %}">Log-in</a>
+						</li>
+
+						{% endif %}
+					</ul>
+				</div>
+				
+				<div id="nav-options" class="btn-group pull-right d-none d-md-block" style="margin: 0.5em;">
+					{% if request.user.profile.photo %}
+					<button type="button" class="btn btn-default dropdown-toggle thumbnail" data-toggle="dropdown" area-haspopup="true"  area-expanded="false" style="margin: 0; padding: 0;">
+					{% with request.user.profile.photo as im %}
+					<img src="{{ im.url }}" style="max-height: 2.3em;border-radious: 0.3em;">
+					{% endwith %}
+					</button>
+					{% else %}
+					<button type="button" class="btn btn-default dropdown-toggle thumbnail" data-toggle="dropdown" area-haspopup="true"  area-expanded="false" style="margin: 0; padding: 0;">
+					{% with request.user.profile.photo as im %}
+					<img src="{% static 'img/portrait_placeholder.png' %}" style="max-height: 2.3em;border-radious: 0.3em;">
+					{% endwith %}
+					</button>	
+					{% endif %}
+					<ul class="dropdown-menu">
+						<h6 class="dropdown-header">
+						{% if user.is_authenticated %}
+							Hi! {{ request.user.username.title }}.
+						</h6>
+						<li style="padding: .5em .5em">
+							<a href="{% url 'your_profile' %}"><i class="far fa-user-circle"></i> Profile</a>
+						</li>
+						<div class="dropdown-divider"></div>
+						<li style="padding: .5em .5em">
+							<a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> log out</a>
+						</li>
+						{% else %}
+						<li>
+							<a href="{% url 'login' %}">Log-in</a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	<div class="container">
+				
+
+		
+		<div class="row">
+			<div id ="profile" class="col-md-3 d-none d-md-block">
+				<div id="profile-resume" class="card mt-1" style="padding: .25rem;border: 2px solid #ff339c;">
+					<img class="card-img-top img-responsive" src="{% static 'img/card_img_top.jpg' %}">
+					<div class="card-block">
+						{% if request.user.profile.photo %}
+						{% thumbnail request.user.profile.photo "90x90" crop="100%" as im %}
+							<img  class="card-img" src="{{ im.url }}">
+						{% endthumbnail %}
+						{% else %}
+						<img class="card-img" src="{% static 'img/portrait_placeholder.png' %}">
+						{% endif %}
+						<h5 class="card-title" style="font-style: italic">{{ request.user.username }}</h5>
+						<p class="card-text" style="font-style: italic">are you hungry ??</p>
+						<ul class="list-inline  list-unstyled">
+							<li class="list-inline-item" id="card-posts">
+								<span class="profile-status" style="display: block;">Posts</span>
+								<span class="profile-value" >{{ post_no }}</span>
+							</li>
+							<li class="list-inline-item" class="card-following">
+								<span class="profile-status" style="display: block">Following</span>
+								<span class="profile-value">{{ following_no }}</span>
+							</li>
+							<li class="list-inline-item" class="card-followers">
+								<span class="profile-status" style="display: block">Followers</span>
+								<span class="profile-value">{{ followers_no }}</span>
+							</li>
+						</ul>			
+					</div>
+					
+				</div>
+
+			</div>
+			<div id="main"  class="col-sm-12 col-md-6">
+				<div>
+				  {% if messages %}
+					<ul class="messages">
+					  {% for message in messages %}
+						<li class="{{ message.tags }}">
+						  {{ message|safe }}
+							<a href="#" class="close">x</a>
+						</li>
+					  {% endfor %}
+					</ul>
+				  {% endif %}
+				</div>
+				{% block content %}{% endblock %}
+			</div>
+			<div id="right-content" class="col-md-3 d-none d-md-block">
+				<div id="profile-posts" class="carousel slide mt-2" data-ride="carousel" style="border: 2px solid #ff339c;">
+					<ol class="carousel-indicators">
+						<li data-target="#profile-posts" data-slide-to="0" class="active"></li>
+						<li data-target="#profile-posts" data-slide-to="1"></li>
+						<li data-target="#profile-posts" data-slide-to="2"></li>
+						<li data-target="#profile-posts" data-slide-to="3"></li>
+						<li data-target="#profile-posts" data-slide-to="4"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img class="d-block w-100 img-responsive" src="{% static 'img/corousel_img.jpg' %}" alt="Your posts" style="height: 250px; width: 200px;">			
+						</div>
+						{% for image in sw_images %}
+						<div class="carousel-item">
+							<a href="{{ image.get_absolute_url }}" class="thumbnail img-responsive">
+								{% thumbnail image.image "200x200" crop="100%" as im %}
+									<a href="{{ image.get_absolute_url }}">
+										<img class="img-responsive d-block w-100" src="{{ im.url }}">
+									</a>
+								{% endthumbnail %}
+							</a>			
+						</div>
+						{% endfor %}
+						<a class="carousel-control-prev" href="#profile-posts" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						
+						<a class="carousel-control-next" href="#profile-posts" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+				</div>
+				
+					<div class="card mt-1" style="padding: .25rem;border: 2px solid #ff339c;">
+						<div class="card-body">
+							<p class="card-text">
+								We know you are a great cook.We are eger to taste your dish.soon you will be able to share your recipe...
+							</p>
+						</div>
+					</div>
+					
+			</div>
+		</div>
+	</div>
+	</body>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script>
+		var csrftoken = Cookies.get('csrftoken');
+		function csrfSafeMethod(method) {
+			// these HTTP methods do not require CSRF protection
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+		$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+				if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			}
+		});
+		$(document).ready(function(){
+		  {% block domready %}
+		  {% endblock %}
+		   });
+	</script>
+</html>

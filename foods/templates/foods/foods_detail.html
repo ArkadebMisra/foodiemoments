@@ -1,0 +1,112 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="{% static 'css/foods_detail.css' %}" type="text/css" rel="stylesheet" />
+	<title>|post detail</title>
+</head>
+
+{% block content %}
+<div id="detail" class="card border-danger mb-3 mt-2">
+	<div class="headder" align="center" style="background-color: e6ffff;">
+		<a href="{{ image.user.get_absolute_url }}">
+			{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
+				<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
+			{% endthumbnail %}
+		</a>
+		<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
+	</div>
+	<div class="card-body">
+		{% with image.image as im %}
+			<img class="card-img img-responsive img-thumbnail" src="{{ im.url }}">
+		{% endwith %}
+	</div>
+	<div class="card-body">
+	<p class="card-text">
+	{{ image.about }}
+	</p>
+	</div>
+</div>
+<p>
+  {% with total_likes=image.users_like.count users_like=image.users_like.all %}
+    <div class="image-info">
+      <div>
+        <span class="count">
+         <span class="total">{{ total_likes }}</span>
+         like{{ total_likes|pluralize }}
+        </span>
+        <a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
+          {% if request.user not in users_like %}
+            <img src="{% static 'img/smile.png' %}" style="height:3em; width:3em">
+          {% else %}
+            <img src="{% static 'img/teasty.png' %}" style="height:3em; width:3em">
+          {% endif %}
+        </a>
+      </div>
+    </div>
+  {% endwith %}
+</p>
+
+<p>
+	Add a Comment
+	<form action "." method = "post" class="form">
+		{% bootstrap_form comment_form %}
+		{% csrf_token %}
+		{% buttons %}
+		<div class="buttons" align="center">
+		<button name="submit" class="btn btn-primary" value="comment" align="center">Comment</button>
+		{% endbuttons %}
+		</div>
+	</form>
+</p>
+<div class="comment-feed" style=" margin-bottom: 1em;">
+{% if not comments %}
+<div class="card mt-1" style="border-radius:25px; border: 1px solid #ff0606;">
+	nobody commented yet!
+</div>
+{% else %}
+{% for comment  in comments %}
+<div class="card mt-1" style="border-radius:15px;">
+	<div class="pull-left">
+		by {{ comment.user }}<small> on {{ comment.created|date:'M d, Y H:i' }}</small> 
+	</div>
+	<div class="card-body" style="border-radius:25px; border: 1px solid #ff0606;padding: .50em .50em;">
+	{{ comment }}
+	</div>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock %}
+
+{% block domready %}
+  $('a.like').click(function(e){
+    e.preventDefault();
+    $.post('{% url "like" %}',
+      {
+        id: $(this).data('id'),
+        action: $(this).data('action')
+      },
+      function(data){
+        if (data['status'] == 'ok')
+        {
+          var previous_action = $('a.like').data('action');
+
+          // toggle data-action
+          $('a.like').data('action', previous_action == 'like' ? 'unlike' : 'like');
+          // toggle link text
+          $('a.like').html(previous_action == 'like' ? '<img src="{% static 'img/teasty.png' %}" style="height:3em; width:3em">' : '<img src="{% static 'img/smile.png' %}" style="height:3em; width:3em">');
+
+          // update total likes
+          var previous_likes = parseInt($('span.count .total').text());
+          $('span.count .total').text(previous_action == 'like' ? previous_likes + 1 : previous_likes - 1);
+        }
+      }
+    );
+  });
+{% endblock %}
+</html>

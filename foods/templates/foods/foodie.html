@@ -1,0 +1,49 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load thumbnail %}
+{% load static %}
+<head>
+	<link href="{% static 'css/foodie.css' %}" type="text/css" rel="stylesheet"/>
+</head>
+
+{% block content %}
+<div align="center">
+<h3 style="font-family: Comic Sans Ms;sans-serif; align: center;">What have you eaten today??</h3>
+<h4 style="font-family: Comic Sans Ms;sans-serif; align: center;">Share your foodie moments here...</h4>
+</div>
+		<form action="." method="post" enctype="multipart/form-data" class="form" >
+			{% bootstrap_form image_form %}
+			{% csrf_token %}
+			{% buttons %}
+			<button name="submit" class="btn btn-primary" value="POST">post</button>
+			{% endbuttons %}
+		</form>
+		
+<h1 align="center" style="font-family: Comic Sans Ms;sans-serif;">post shared</h1>
+<div id="foods-foodie">
+	{% include "foods/foodie_ajax.html" %}
+</div>
+{% endblock %}
+
+{% block domready %}
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+
+  $(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+     block_request = true;
+      page += 1;
+      $.get('?page=' + page, function(data) {
+       if(data == '') {
+          empty_page = true;
+        }
+        else {
+          block_request = false;
+          $('#foods-foodie').append(data);
+        }
+      });
+    }
+  });
+{% endblock %}

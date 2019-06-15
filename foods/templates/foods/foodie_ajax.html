@@ -1,0 +1,36 @@
+{% load thumbnail %}
+{% load bootstrap4 %}
+{% load static %}
+
+	{% for posted_image in posted_images %}
+	<div id="feed" class="card border-danger mb-3" align="center">
+		<div>
+			<div class="headder" align="center" style= "padding: .5em 0em;">
+				{% if posted_image.user.profile.photo %}
+				<a href="{{ posted_image.user.get_absolute_url }}">
+				{% thumbnail posted_image.user.profile.photo "100x100" crop="100%" as im %}
+					<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
+				{% endthumbnail %}
+				</a>
+				{% else %}
+				<a href="{{ posted_image.user.get_absolute_url }}">
+					<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
+				</a>
+				{% endif %}
+				<h5 style="display: inline-block;">{{ posted_image.user }}<small> {{ posted_image.created|date:'M d, Y H:i' }}</small></h5>
+			</div>
+
+			<div class="card-body" style="padding: 0em 0em;">
+				{% with posted_image.image as im %}
+					<a href="{{ posted_image.get_absolute_url }}">
+						<img class="card-img img-responsive img-thumbnail" src="{{ im.url }}">
+					</a>
+				{% endwith %}
+			</div>
+			<div class="card-body" style="padding: 0em 0em ;">
+			<p>{{ posted_image.about|linebreaks }}</p>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+

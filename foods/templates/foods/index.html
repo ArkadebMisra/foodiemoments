@@ -1,0 +1,17 @@
+{% extends "foods/base.html" %}
+
+{% block content %}
+<h1>
+	<p>welcome to foodie!</p>
+</h1>
+<h2>
+	<p>
+		{% for user in users %}
+			{{ user.get_full_name }}
+		{% endfor %}
+		<p>Share your foodie moments...</p>
+		<p>enjoy the amazing world of flavours....</p>
+		<p>Please <a href="{% url 'register' %}">create</a> a account to share your moments...</p>
+	</p>
+</h2>
+{% endblock %}

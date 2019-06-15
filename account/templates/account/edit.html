@@ -1,0 +1,18 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>Edit your account.</h1>
+<form action= "." method="post" enctype="multipart/form-data" class="form">
+	{% bootstrap_form user_form %}
+	{% bootstrap_form profile_form %}
+	{% csrf_token %}
+	<div class="buttons" align="center">
+	{% buttons %}
+	<button name="submit" class="btn btn-primary" value="save changes" align="center">save changes</button>
+	{% endbuttons %}
+	</div>
+</form>
+<h4 align="center">
+	<a class="pb-1" href="{% url 'password_change' %}">Change Password</a>
+</h4>		
+{% endblock %}

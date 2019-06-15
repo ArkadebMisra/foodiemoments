@@ -1,0 +1,38 @@
+{% load thumbnail %}
+{% load bootstrap4 %}
+{% load static %}
+
+	{% if not images %}
+	<h3 align="center" style="margin: 1em 1em;">You haven't posted yet</h3>
+	{% else %}
+	{% for image in images %}
+	<div id="feed" class="card border-danger mb-3" align="center">
+			<div class="headder card-title" align="center" style="padding: 0em 0em,">
+				{% if image.user.profile.photo %}
+				<a href="{{ image.user.get_absolute_url }}">
+				{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
+					<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
+				{% endthumbnail %}
+				</a>
+				{% else %}
+				<a href="{{ image.user.get_absolute_url }}">
+					<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
+				</a>
+				{% endif %}
+				<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
+				<a href="{% url 'post_delete' image.id image.slug %}" style="display: inline-block;float: right;vertical-align: center;"> <i class="fas fa-trash-alt" style="color: #ff0000"></i></a>
+			</div>
+
+			<div class="card-body" style="padding: 0em 0em;">
+				{% with image.image as im %}
+					<a href="{{ image.get_absolute_url }}">
+						<img class="card-img img-responsive img-thumbnail" src="{{ im.url }}">
+					</a>
+				{% endwith %}
+			</div>
+			<div class="card-body" style="padding: 0em 0em ;">
+			<p>{{ image.about|linebreaks }}</p>
+			</div>
+	</div>
+	{% endfor %}
+	{% endif %}

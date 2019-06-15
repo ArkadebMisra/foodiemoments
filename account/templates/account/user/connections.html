@@ -1,0 +1,37 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-follower-tab" data-toggle="tab" href="#nav-follower" role="tab" aria-controls="nav-follower" aria-selected="true">Followers</a>
+    <a class="nav-item nav-link" id="nav-following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="nav-following" aria-selected="false">followings</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-follower" role="tabpanel" aria-labelledby="nav-follower-tab">
+	  {% for follower in followers %}
+	  <div class="card mt-2">
+		  <h3 class="float-left">
+			{{ follower }}
+			<small style="float: right;"><a href="{{ follower.get_absolute_url }}"><i class="fas fa-eye" style="color: #000000;"></i></a></small>
+		  </h3>
+	  </div>
+	  {% endfor %}
+  </div>
+  <div class="tab-pane fade" id="nav-following" role="tabpanel" aria-labelledby="nav-following-tab">
+	  {% for following in followings %}
+	  <div class="card mt-2">
+		  <h3 class="float-left">
+			{{ following }}
+			<small style="float: right;"><a href="{{ following.get_absolute_url }}"><i class="fas fa-eye" style="color: #000000;"></i></a></small>
+		  </h3>
+	  </div>
+	  {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

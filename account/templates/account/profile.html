@@ -1,0 +1,55 @@
+{% extends "foods/base.html" %}
+{% load thumbnail %}
+{% block content %}
+{% load static %}
+<h2 align="center">{{ user.get_full_name }}</h2>
+<div class="profile-photo" align="center">
+	{% if user.profile.photo %}
+	{% thumbnail user.profile.photo "500x500" crop="center" as im %}
+		<img class="img-responsive  img-thumbnail rounded-circle" src="{{ im.url }}" alt="{{user.get_full_name }}" style="width: 70%;">
+	{% endthumbnail %}
+	{% else %}
+	<img  class="rounded-circle img-responsive img-thumbnail" src="{% static 'img/portrait_placeholder.png' %}" style="width: 60%">
+	{% endif %}
+</div>
+
+<div align="center">
+<div class="m-4 connections" align="center" style="border-radius:25px; border: 2px solid #ff5500;width: 12em;padding: .5em 1em;">
+	<a href="{% url 'connections' %}">your connections </a>
+</div>
+</div>
+
+<div align="center">
+<div class="m-4 edit" align="center" style="border-radius:25px; border: 2px solid #ff5500;width: 12em;padding: .5em 1em;">
+	<a href="{% url 'edit' %}"><i class="fas fa-pencil-alt"></i> Edit </a>your account
+</div>
+</div>
+
+<div id="foods-foodie">
+	{% include "account/profile_ajax.html" %}
+</div>
+
+{% endblock %}
+
+{% block domready %}
+  var page = 1;
+  var empty_page = false;
+  var block_request = false;
+
+  $(window).scroll(function() {
+    var margin = $(document).height() - $(window).height() - 200;
+    if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
+     block_request = true;
+      page += 1;
+      $.get('?page=' + page, function(data) {
+       if(data == '') {
+          empty_page = true;
+        }
+        else {
+          block_request = false;
+          $('#foods-foodie').append(data);
+        }
+      });
+    }
+  });
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+	<div id="feed" class="card border-danger mt-2 mb-3" align="center">
+		<div>
+			<div class="headder" align="center" style="padding: .5em 0em">
+				{% if image.user.profile.photo %}
+				<a href="{{ image.user.get_absolute_url }}">
+				{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
+					<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
+				{% endthumbnail %}
+				</a>
+				{% else %}
+				<a href="{{ image.user.get_absolute_url }}">
+					<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
+				</a>
+				{% endif %}
+				<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
+			</div>
+
+			<div class="card-body" style="padding: 0em 0em;">
+				{% with image.image as im %}
+					<img class="card-img img-responsive img-thumbnail" src="{{ im.url }}">
+				{% endwith %}
+			</div>
+			<div class="card-body" style="padding: 0em 0em ;">
+			<p>{{ image.about|linebreaks }}</p>
+			</div>
+		</div>
+	</div>
+		
+<h4 align="center">Are you sure you want to delete this image?</h4>
+<div>
+<form action="." method="post" align="center" style="padding: 1em 1em;">
+	{% csrf_token %}
+	{% buttons %}
+	<button name="submit" class="btn btn-danger" value="yes">yes</button>
+	{% endbuttons %}
+</form>
+</div>
+{% endblock %}

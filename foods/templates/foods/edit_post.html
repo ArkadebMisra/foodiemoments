@@ -1,0 +1,14 @@
+{% extends "foods/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+<form action="." method="post" enctype="multipart/form-data" >
+	{{ edit_form.as_p }}
+	{% csrf_token %}
+	<input type="submit" value="save">
+</form>
+
+<a href="{% url 'post_delete' image.id image.slug %}">delete</a>
+{% endblock %}

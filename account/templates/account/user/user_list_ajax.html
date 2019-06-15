@@ -1,0 +1,30 @@
+{% load thumbnail %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+<div id="people-list">
+	{% for user in users %}
+	{% if user.profile.photo %}
+	<p style="border-radius:50px; border: 1.5px solid #ff66ff;margin: .5em 0em;">
+	<a href="{{ user.get_absolute_url }}">
+		{% thumbnail user.profile.photo "100x100" crop="center" as im %}
+		<img  class="rounded-circle img-responsive" src="{{ im.url }}" style="width: 20%;padding: .5em .5em;">
+		{% endthumbnail %}
+	</a>
+	<a href="{{ user.get_absolute_url }}">
+		{{ user.username }}
+	</a>
+	</p>
+	{% else %}
+	<p style="border-radius:50px; border: 1.5px solid #ff66ff;margin: .5em 0em;">
+	<a href="{{ user.get_absolute_url }}">
+		<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 20%;padding: .5em .5em;">
+	</a>
+	<a href="{{ user.get_absolute_url }}">
+		{{ user.username }}
+	</a>
+	</p>
+	{% endif %}
+	{% endfor %}
+</div>
