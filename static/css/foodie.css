@@ -1,0 +1,7 @@
+#new-message .input-group {
+	border-radius: 0.4rem 0.4rem 0 0;
+	padding: 1em;
+	border-bottom: 0.1em solid #CEE4F5;
+	background-color: #EBF4FB;
+	position: relative; 
+}

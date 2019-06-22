@@ -1,0 +1,66 @@
+
+
+.card {
+	padding: 1.25rem;
+	position: fixed;
+	border: 0.1rem solid #e5e5e5;
+	border-radius: 0.4rem;
+	position: relative;
+	background-color: #fff;
+}
+
+.card-img-top{
+	border-radius: 0.4rem 0.4rem 0 0 ;
+}
+
+.card-block {
+	padding: 1.25rem;
+}
+
+.card-block img.card-img {
+	top: 50%;
+	margin-top: -36px;
+	width: 72px;
+	border: 3px solid #FFF;
+	border-radius: 0.4rem;
+	float: left;
+	position: relative;
+	z-index: 99;
+}
+
+.card-block .card-title small {
+	display: block;
+}
+
+.card-block .card-text {
+	clear: both;
+	padding-top: 0.25em;
+	margin-bottom: 1.5em;
+}
+
+.card-block ul .profile-status {
+	color: #cc66ff;
+	display: block;
+	text-transform: uppercase;
+	font-size: 0.8em;
+}
+
+.card-block ul .profile-value {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #000000;
+}
+
+.card-header {
+	border-radius: 0.4rem 0.4rem 0 0;
+	padding: .75rem 1.25rem;
+	background-color: #ffe6e6;
+	border-bottom: 0.1em solid #e5e5e5;
+	color: 4e5665;
+	font-weight: bold;
+}
+
+#profile-posts {
+	margin-top: 2rem;
+}
+
