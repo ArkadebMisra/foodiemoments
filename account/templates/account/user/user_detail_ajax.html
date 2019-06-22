@@ -17,7 +17,7 @@
 					<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
 				</a>
 				{% endif %}
-				<h5 style="display: inline-block">by {{ posted_image.user }}<small> on {{ posted_image.created|date:'M d, Y H:i' }}</small></h5>
+				<h5 style="display: inline-block">{{ posted_image.user }}<small> {{ posted_image.created|date:'M d, Y H:i' }}</small></h5>
 			</div>
 
 			<div class="card-body" style="padding: 0em 0em;">

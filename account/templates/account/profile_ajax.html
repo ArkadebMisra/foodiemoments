@@ -19,10 +19,10 @@
 					<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
 				</a>
 				{% endif %}
-				<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
-				<a href="{% url 'post_delete' image.id image.slug %}" style="display: inline-block;float: right;vertical-align: center;"> <i class="fas fa-trash-alt" style="color: #ff0000"></i></a>
+				<h5 align="left" style="display: inline-block;">{{ image.user }}<small> {{ image.created|date:'M d, Y H:i' }}</small></h5>
+				 <a href="{% url 'post_delete' image.id image.slug %}" vertical-align="center" style="float: right;"> <i class="fas fa-trash-alt" style="color: #ff0000"></i></a>
 			</div>
-
+		
 			<div class="card-body" style="padding: 0em 0em;">
 				{% with image.image as im %}
 					<a href="{{ image.get_absolute_url }}">

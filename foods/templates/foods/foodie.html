@@ -7,19 +7,19 @@
 </head>
 
 {% block content %}
-<div align="center">
+<div align="center" style="padding: .5em 0em;">
 <h3 style="font-family: Comic Sans Ms;sans-serif; align: center;">What have you eaten today??</h3>
-<h4 style="font-family: Comic Sans Ms;sans-serif; align: center;">Share your foodie moments here...</h4>
+<h4 style="font-family: Comic Sans Ms;sans-serif; align: center;">Share your foodie moments...</h4>
 </div>
-		<form action="." method="post" enctype="multipart/form-data" class="form" >
+		<form action="." method="post" enctype="multipart/form-data" class="form" align="center">
 			{% bootstrap_form image_form %}
 			{% csrf_token %}
 			{% buttons %}
-			<button name="submit" class="btn btn-primary" value="POST">post</button>
+			<button name="submit" class="btn btn-primary" value="POST" align="center">POST</button>
 			{% endbuttons %}
 		</form>
 		
-<h1 align="center" style="font-family: Comic Sans Ms;sans-serif;">post shared</h1>
+<h1 align="center" style="font-family: Comic Sans Ms;sans-serif;">Posts</h1>
 <div id="foods-foodie">
 	{% include "foods/foodie_ajax.html" %}
 </div>
