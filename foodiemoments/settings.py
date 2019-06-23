@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'foodiemoments.wsgi.application'
 #        }
 #    }
 #else:
-    DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'foodiemoments',
