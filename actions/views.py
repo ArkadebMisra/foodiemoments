@@ -11,7 +11,7 @@ def notification(request):
 
     if following_ids:
         # If user is following others, retrieve only their actions
-        actions = actions.filter(user_id__in=followings_ids)
-    actions = actions.select_related('user', 'user__profile')\
-                     .prefetch_related('target')[:10]
+        actions = actions.filter(user_id__in=followings_ids)\
+                         .select_related('user', 'user__profile')\
+                         .prefetch_related('target')[:10]
     return render(request,'actions/notification.html',{'actions':actions})
