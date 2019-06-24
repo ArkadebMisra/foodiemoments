@@ -20,10 +20,14 @@
 					<a href="{{ user.get_absolute_url }}">
 						{{ user.username }}
 					</a>
-					{{ action.verb }}
-					{% if action.target %}
+					{{ action.verb }}			
+					{% if action.target_ct == user %}
 					{% with target=action.target %}
-					<a href="{{ target.get_absolute_url }}">your post</a>
+					<a href="{{ target.get_absolute_url }}">{{ target }}</a>
+					{% endwith %}
+					{% else %}
+					{% with target=action.target %}
+					<a href="{{ target.get_absolute_url }}">a post</a>
 					{% endwith %}
 					{% endif %}
 					</div>
@@ -44,9 +48,13 @@
 						{{ user.username }}
 					</a>
 					{{ action.verb }}
-					{% if action.target %}
+					{% if action.target_ct == user %}
 					{% with target=action.target %}
-					<a href="{{ target.get_absolute_url }}">your post</a>
+					<a href="{{ target.get_absolute_url }}">{{ target }}</a>
+					{% endwith %}
+					{% else %}
+					{% with target=action.target %}
+					<a href="{{ target.get_absolute_url }}">a post</a>
 					{% endwith %}
 					{% endif %}
 					</div>
