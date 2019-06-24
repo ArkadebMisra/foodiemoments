@@ -11,4 +11,4 @@ def notification(request):
     actions = actions.filter(user_id__in=following_ids)
     actions = actions.select_related('user', 'user__profile')\
                      .prefetch_related('target')[:10]
-    return render(request,'actions/notification.html',{'actions':actions)
+    return render(request,'actions/notification.html',{'actions':actions})
