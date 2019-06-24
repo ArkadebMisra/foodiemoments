@@ -14,9 +14,15 @@
 <div id="detail" class="card border-danger mb-3 mt-2">
 	<div class="headder" align="center" style="background-color: e6ffff;">
 		<a href="{{ image.user.get_absolute_url }}">
+			{% if image.user.profile.photo %}
 			{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
 				<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
 			{% endthumbnail %}
+			{% else %}
+			<a href="{{ image.user.get_absolute_url }}">
+				<img  class="rounded-circle img-responsive" src="{% static 'img/portrait_placeholder.png' %}" style="width: 13%; display: inline-block;">
+			</a>
+			{% endif %}
 		</a>
 		<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
 	</div>

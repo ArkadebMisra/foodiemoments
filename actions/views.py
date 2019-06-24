@@ -13,8 +13,8 @@ def notification(request):
     images_ids = images.filter(user=request.user).values_list('id',flat=True)
     if following_ids:
         # If user is following others, retrieve only their actions
-        actions = actions.filter(target_id__in=images_ids)
-    actions = actions.select_related('user', 'user__profile')\
+        action = actions.filter(target_id__in=images_ids)
+    actions = action.select_related('user', 'user__profile')\
                      .prefetch_related('target')[:10]
     return render(request,'actions/notification.html',{'actions':actions,
                                                        'images_ids':images_ids})
