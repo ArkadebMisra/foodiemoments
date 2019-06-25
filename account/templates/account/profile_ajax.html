@@ -10,7 +10,7 @@
 			<div class="headder card-title" align="center" style="padding: 0em 0em,">
 				{% if image.user.profile.photo %}
 				<a href="{{ image.user.get_absolute_url }}">
-				{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
+				{% thumbnail image.user.profile.photo "100x100" crop="center" as im %}
 					<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
 				{% endthumbnail %}
 				</a>

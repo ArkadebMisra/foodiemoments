@@ -15,7 +15,7 @@
 	<div class="headder" align="center" style="background-color: e6ffff;">
 		<a href="{{ image.user.get_absolute_url }}">
 			{% if image.user.profile.photo %}
-			{% thumbnail image.user.profile.photo "100x100" crop="100%" as im %}
+			{% thumbnail image.user.profile.photo "100x100" crop="center" as im %}
 				<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
 			{% endthumbnail %}
 			{% else %}
@@ -24,7 +24,7 @@
 			</a>
 			{% endif %}
 		</a>
-		<h5 align="center" style="display: inline-block">by {{ image.user }}<small> on {{ image.created|date:'M d, Y H:i' }}</small></h5>
+		<h5 align="center" style="display: inline-block">{{ image.user }}<small> {{ image.created|date:'M d, Y H:i' }}</small></h5>
 	</div>
 	<div class="card-body">
 		{% with image.image as im %}

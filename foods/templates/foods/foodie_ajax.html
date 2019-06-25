@@ -8,7 +8,7 @@
 			<div class="headder" align="center" style= "padding: .5em 0em;">
 				{% if posted_image.user.profile.photo %}
 				<a href="{{ posted_image.user.get_absolute_url }}">
-				{% thumbnail posted_image.user.profile.photo "100x100" crop="100%" as im %}
+				{% thumbnail posted_image.user.profile.photo "100x100" crop="center" as im %}
 					<img class="img-responsive rounded-circle" src="{{ im.url }}" style="width: 13%; display: inline-block;">
 				{% endthumbnail %}
 				</a>
