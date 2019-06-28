@@ -2,8 +2,10 @@
 from django.shortcuts import render
 from .models import Action
 from foods.models import Image
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def notification(request):
     # Display all actions by default
     actions = Action.objects.exclude(user=request.user)

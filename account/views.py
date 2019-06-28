@@ -74,6 +74,7 @@ def profile(request):
     context = {'user':user,'images':images,}
     return render(request,'account/profile.html',context)
 
+@login_required
 def edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
@@ -93,6 +94,7 @@ def edit(request):
                   {'user_form':user_form,'profile_form':profile_form})
 
 
+@login_required
 def user_list(request):
     user = User.objects.filter(is_active=True)
     user_unordered = user.exclude(username=request.user)
@@ -113,6 +115,7 @@ def user_list(request):
 
     return render(request,'account/user/list.html',{'users':users})
 
+@login_required
 def user_detail(request,username):
     user = get_object_or_404(User,
                              username=username,
@@ -135,6 +138,7 @@ def user_detail(request,username):
 
     return render(request,'account/user/detail.html',{'user':user,'posted_images':posted_images,})
 
+@login_required
 @ajax_required
 @require_POST
 def user_follow(request):
@@ -155,6 +159,7 @@ def user_follow(request):
     return JsonResponse({'status':'ko'})
 
 
+@login_required
 def connection(request):
     followers = request.user.followers.all()
     followings = request.user.following.all()

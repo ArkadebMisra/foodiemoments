@@ -4,6 +4,7 @@ from django.http import HttpResponse,HttpResponseRedirect,JsonResponse,Http404
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from common.decorators import ajax_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from itertools import chain
 
@@ -19,6 +20,7 @@ def index(request):
     else:
         return render(request,'foods/guest_index.html')
 
+@login_required
 def foodie(request):
     following_ids = request.user.following.values_list('id',
                                                        flat=True)
@@ -50,6 +52,7 @@ def foodie(request):
     context = {'posted_images':posted_images,'image_form':image_form}
     return render(request,'foods/foodie.html',context)
 
+@login_required
 def foods_detail(request,id,slug):
     image = get_object_or_404(Image,id=id,slug=slug)
     comment = image.comments.all()
@@ -70,7 +73,7 @@ def foods_detail(request,id,slug):
 
     return render(request,'foods/foods_detail.html',context)
 
-
+@login_required
 def post_delete(request,id,slug):
     image = get_object_or_404(Image,id=id,slug=slug)
     if image.user != request.user:
