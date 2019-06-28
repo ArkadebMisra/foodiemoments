@@ -8,7 +8,7 @@
 	{% if profile.photo %}
 		<div class="action mt-2 mb-2" style=" border-radius:50px; border: 1.5px solid #ff66ff;padding: 2px;">
 					<div style=" margin: 2px;display: inline-block">
-					{% thumbnail user.profile.photo "350x350" crop="100%" as im %}
+					{% thumbnail user.profile.photo "350x350" crop="center" as im %}
 					<a href="{{ user.get_absolute_url }}">
 						<img src="{{ im.url }}" class="rounded-circle img-responsive" style="width: 20%;padding: .5em .5em;">
 					</a>
