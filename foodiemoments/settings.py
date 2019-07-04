@@ -25,7 +25,7 @@ SECRET_KEY = '*_=mw^(6@58$m--5v2x#fgb!h_7d4q*d2g-khcw(f)d&6fi5gq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['134.209.150.26','foodiemoments.in','34.93.222.203','localhost',]
+ALLOWED_HOSTS = ['foodiemoments.in','34.93.222.203','localhost',]
 
 
 # Application definition
